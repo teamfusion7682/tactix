@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0a0a">
+<title>Fusion Tactix</title>
+<style>
+:root{--red:#ff1e27;--red2:#e50914;--black:#0a0a0a;--panel:#17171c;--char:#1e1e24;--white:#fff;--muted:#9d9da7;--line:#ffffff17;--green:#39cb80;font-family:Inter,Arial,sans-serif;color-scheme:dark}*{box-sizing:border-box}body{margin:0;background-color:#0a0a0a;background-image:linear-gradient(#c7c7c70d 1px,transparent 1px),linear-gradient(90deg,#c7c7c70d 1px,transparent 1px),radial-gradient(ellipse at 50% 87%,#50070d 0,transparent 42%);background-size:42px 42px,42px 42px,auto;background-attachment:fixed;color:#fff;min-width:320px}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.app{max-width:1500px;margin:auto;padding:0 22px 28px}.page{display:none}.page.active{display:block}.home-only{display:none}
+/* Home */
+body.home{min-height:100vh}body.home .app{width:100%;min-height:100vh;display:grid;place-items:center;padding:18px}body.home main{width:100%}body.home .inside{display:none}.home-only{display:block}.landing{width:100%;max-width:1180px;min-height:calc(100vh - 36px);margin:0 auto;position:relative}.landing:after{content:'';position:absolute;inset:auto 0 0;height:490px;background:radial-gradient(ellipse at bottom,#ff1e271b,transparent 67%);pointer-events:none}.home-name,.launch-links{position:absolute;z-index:1;top:50%;transform:translateY(-50%)}.home-name{right:clamp(0px,6vw,88px);text-align:right}.landing-title{font-size:clamp(5rem,10vw,9.7rem);font-weight:950;line-height:.68;letter-spacing:-.125em;margin:0}.landing-title span{display:block;color:var(--red);margin-top:.18em;text-shadow:0 0 32px #e5091459}.landing-team{font-size:.68rem;letter-spacing:.24em;font-weight:900;color:#d0d0d5;margin:22px 0 0}.launch-links{left:clamp(0px,6vw,88px);display:flex;flex-direction:column;align-items:flex-start;gap:19px}.launch{border:0;background:none;color:#fff;font-weight:950;letter-spacing:-.05em;font-size:clamp(1.1rem,2.1vw,1.65rem);white-space:nowrap;padding:2px 0;display:flex;justify-content:flex-start;align-items:center;gap:11px;transition:color .18s,transform .18s}.launch:hover,.launch:focus-visible,.launch:active{color:var(--red);transform:translateX(5px);outline:none}.tap{width:8px;height:8px;border:1.5px solid currentColor;border-radius:50%;position:relative;flex:0 0 auto}.tap:after{content:'';position:absolute;width:3px;height:3px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;right:-3px;top:1px;transform:rotate(-45deg)}
+/* Internal layout */
+.inside{padding-top:4px}.top{height:83px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:13px}.brand-mark{height:42px;width:42px;border:1px dashed #ffffff3d;border-radius:50%}.wordmark{font-weight:950;font-size:1.55rem;letter-spacing:-.07em}.wordmark b{color:var(--red)}.team{font-size:.62rem;letter-spacing:.14em;color:var(--muted);font-weight:800}.perpa{margin-left:auto;font-weight:800;font-size:.76rem;color:#e4e4e7;padding:9px 12px;border:1px solid #ffffff25;border-radius:8px}.perpa:hover{border-color:var(--red);color:var(--red)}nav{display:flex;gap:7px;padding:15px 0;overflow:auto}.nav{border:1px solid transparent;background:none;color:#a9a9b1;border-radius:8px;padding:9px 12px;font-weight:850;white-space:nowrap;font-size:.78rem}.nav.active,.nav:hover{color:#fff;border-color:#ff1e2766;background:#e5091420}.back{position:fixed;z-index:20;top:15px;left:15px;border:1px solid #ffffff3b;background:#09090bd9;color:#fff;border-radius:7px;padding:8px 10px;font-size:.72rem;font-weight:900;transition:.18s}.back:hover{border-color:var(--red);color:var(--red)}body:not(.home){overflow:hidden}body:not(.home) .inside{position:fixed;inset:0;z-index:5;overflow-y:auto;padding:70px 22px 26px}body:not(.home) .inside .top,body:not(.home) .inside nav{display:none}body:not(.home) .inside .page{width:min(1500px,100%);margin:0 auto}.panel{background:linear-gradient(135deg,#222229d8,#111116e8);border:1px solid var(--line);border-radius:15px;box-shadow:0 16px 35px #0005;backdrop-filter:blur(10px)}.section-title{font-size:.67rem;color:var(--red);letter-spacing:.15em;font-weight:950;text-transform:uppercase;margin:0 0 11px}.btn{border:0;border-radius:8px;background:var(--red2);color:#fff;font-weight:900;padding:10px 13px;font-size:.75rem}.btn:hover{background:var(--red);box-shadow:0 0 19px #e5091457}.btn.soft{background:#ffffff10;border:1px solid var(--line);color:#e7e7e9}.btn.warn{background:#ab8000}.input{width:100%;background:#09090c;border:1px solid #ffffff20;border-radius:8px;padding:10px;color:#fff;outline:none}.input:focus{border-color:#ff1e27;box-shadow:0 0 0 3px #e5091420}.hint{color:var(--muted);font-size:.76rem;line-height:1.45}.empty-logo{border:1px dashed #ffffff2d;border-radius:50%;width:42px;height:42px}
+/* Board */
+.board{display:grid;grid-template-columns:230px minmax(0,1fr) 245px;grid-template-areas:'tools field right';gap:14px}.tools{grid-area:tools}.field{grid-area:field}.right{grid-area:right}.tools,.right{padding:14px}.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.tool{background:#0b0b0d;border:1px solid var(--line);color:#d2d2d7;border-radius:8px;padding:9px 5px;font-size:.72rem;font-weight:800}.tool.active,.tool:hover{border-color:#ff1e278c;background:#e5091421;color:white}.split{height:1px;background:var(--line);margin:15px 0}.colors{display:flex;gap:8px}.color{width:26px;height:26px;border:2px solid transparent;border-radius:7px}.color.active{border-color:#fff;outline:2px solid var(--red)}.range{width:100%;accent-color:var(--red)}.field{height:600px;position:relative;overflow:hidden;background:#0f0f12;isolation:isolate}.field-image{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:0;pointer-events:none}.field.grid-on:after{content:'';position:absolute;z-index:1;inset:0;background-image:linear-gradient(#ffffff1c 1px,transparent 1px),linear-gradient(90deg,#ffffff1c 1px,transparent 1px);background-size:6.25% 12.5%;pointer-events:none}.field-top{position:absolute;z-index:6;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;pointer-events:none}.field-tag,.field-fullscreen{background:#09090bd9;border:1px solid #ffffff24;border-radius:7px;padding:7px 9px;font-size:.64rem;font-weight:850}.field-fullscreen{pointer-events:auto;color:#fff;cursor:pointer}.field-fullscreen:hover{border-color:var(--red);color:var(--red)}.field canvas{position:absolute;z-index:2;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.eraser-cursor{display:none;position:absolute;z-index:5;border:2px solid #fff;border-radius:50%;background:#ff1e2729;box-shadow:0 0 0 1px #000;pointer-events:none}.tokens{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.token{border:1px dashed #ffffff35;background:#0c0c0e;color:#fff;min-height:35px;border-radius:7px;font-weight:900;font-size:1rem}.token.red{color:#ff7a7f}.token.blue{color:#7baaff}.piece{position:absolute;z-index:4;width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:#16161c;border:1px solid #ffffff75;font-size:16px;user-select:none;touch-action:none;cursor:grab}.piece.robot{font-size:.65rem;font-weight:950}.piece.r{background:#b70e16}.piece.b{background:#164eaa}.piece-remove{position:absolute;right:-7px;top:-7px;width:17px;height:17px;padding:0;border:1px solid #fff8;border-radius:50%;background:#b70e16;color:#fff;line-height:13px;font-size:13px;font-weight:900;cursor:pointer}.piece-remove:hover{background:#ff1e27}.fullscreen-tools{display:none}.field:fullscreen,.field:-webkit-full-screen{width:100vw;height:100dvh;max-width:none;border-radius:0}.field:fullscreen .fullscreen-tools,.field:-webkit-full-screen .fullscreen-tools{position:absolute;z-index:7;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;padding:7px;background:#09090bd9;border:1px solid #ffffff30;border-radius:10px}.fullscreen-tool{border:1px solid #ffffff2b;border-radius:6px;background:#ffffff12;color:#fff;padding:7px 9px;font-size:.7rem;font-weight:850}.fullscreen-tool.active{border-color:var(--red);background:#e5091455}.timer{text-align:center;font-size:2.3rem;font-weight:950;letter-spacing:.04em}.phase{text-align:center;color:var(--red);font-size:.67rem;letter-spacing:.13em;font-weight:950;margin:3px}.timer-row{display:flex;gap:7px;margin-top:11px}.timer-row .btn{flex:1}.alert{padding:10px;border-left:3px solid var(--green);background:#09090b88;border-radius:6px;font-size:.72rem;line-height:1.45;margin-top:10px}.alert.danger{border-color:var(--red);color:#ffbdc0}
+/* Checklist */
+.lead{padding:22px;display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:15px}.lead h1{font-size:1.65rem;letter-spacing:-.05em;margin:0}.lead p{color:var(--muted);font-size:.84rem;margin:7px 0 0}.checks{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.check-panel,.meter{padding:17px}.check{display:flex;gap:11px;align-items:center;padding:13px 5px;border-bottom:1px solid var(--line);font-size:.88rem}.check input{appearance:none;width:20px;height:20px;border-radius:5px;border:1px solid #ffffff55;background:#08080a;display:grid;place-content:center}.check input:checked{background:var(--red);border-color:var(--red)}.check input:checked:after{content:'✓';font-weight:950}.check:has(input:checked) span{color:#777;text-decoration:line-through}.add{display:flex;gap:7px;margin-top:15px}.metric{font-size:3.1rem;font-weight:950;color:var(--red)}.bar{height:7px;background:#ffffff18;border-radius:9px;overflow:hidden;margin:15px 0}.bar i{display:block;height:100%;background:var(--red);box-shadow:0 0 15px var(--red)}
+/* Checklist actions */
+.check input{flex:0 0 auto}.check:has(input:checked) .check-text{color:#777;text-decoration:line-through}.check-text{flex:1;min-width:0}.check-actions{display:flex;gap:5px;margin-left:auto}.check-action{border:1px solid var(--line);border-radius:6px;background:#ffffff0c;color:#ddd;padding:5px 7px;font-size:.66rem;font-weight:850}.check-action:hover{border-color:var(--red);color:#fff}.check-action.delete:hover{background:#a61118;border-color:#a61118}.check-empty{padding:27px 5px 12px;color:var(--muted);font-size:.8rem;text-align:center}
+/* Match log */
+.log{display:grid;grid-template-columns:390px minmax(0,1fr);gap:15px}.form,.records{padding:18px}.form h2,.records h2{font-size:1.1rem;margin:0 0 5px}.form p{margin:0 0 16px;color:var(--muted);font-size:.76rem}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field-row{display:grid;gap:5px}.field-row.full{grid-column:1/-1}.field-row label{font-size:.64rem;font-weight:900;letter-spacing:.08em;color:#bbb;text-transform:uppercase}.partners{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.outcome{display:flex;padding:3px;background:#09090b;border:1px solid var(--line);border-radius:8px}.outcome button{flex:1;border:0;background:transparent;color:#aaa;padding:8px;font-weight:900;border-radius:5px}.outcome .active.win{background:#147747;color:#fff}.outcome .active.loss{background:#a9161d;color:#fff}textarea.input{min-height:88px;resize:vertical}.record-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:14px}.count{color:var(--muted);font-size:.72rem}.records-list{display:grid;gap:9px}.record{position:relative;border:1px solid var(--line);border-radius:10px;background:#07070869;padding:13px 82px 13px 13px}.record-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.record strong{font-size:.9rem}.badge{font-size:.62rem;padding:5px 7px;border-radius:20px;font-weight:950}.badge.win{color:#78eca8;background:#1a9a5830;border:1px solid #39cb8066}.badge.loss{color:#ff989d;background:#e5091429;border:1px solid #ff1e2766}.record small{display:block;margin-top:8px;color:#b1b1b9}.notes{font-size:.75rem;color:#94949d;line-height:1.4;margin:8px 0 0;white-space:pre-wrap}.actions{position:absolute;top:10px;right:9px;display:flex;gap:5px}.mini{border:0;background:#ffffff10;color:white;border-radius:5px;padding:5px;font-size:.65rem}.mini.del:hover{background:#a61118}.none{color:#888;border:1px dashed var(--line);border-radius:9px;padding:35px;text-align:center;font-size:.8rem}.toast{position:fixed;right:18px;bottom:18px;z-index:10;opacity:0;transform:translateY(10px);transition:.2s;padding:10px 13px;border-radius:8px;background:#202026;border:1px solid #ff1e2788;font-size:.75rem}.toast.show{opacity:1;transform:none}
+@media(max-width:1050px){.board{grid-template-columns:210px minmax(0,1fr)}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:12px}.right .split{display:none}.log{grid-template-columns:350px minmax(0,1fr)}}@media(max-width:730px){.home-name{right:0;top:43%;transform:translateY(-50%)}.launch-links{left:0;top:70%;transform:translateY(-50%);gap:17px}.landing-title{font-size:clamp(4.2rem,21vw,6.5rem)}.landing-team{font-size:.58rem;margin-top:18px}.launch{font-size:clamp(1rem,5vw,1.3rem)}.app{padding:0 12px 20px}.board,.checks,.log{grid-template-columns:1fr}.tools{display:grid;grid-template-columns:1fr 1fr;gap:13px}.tools .split{display:none}.field{height:430px}.right{grid-column:auto;display:block}.right .split{display:block}.lead{display:block}.lead .btn{margin-top:13px}.form-grid{grid-template-columns:1fr}.field-row.full{grid-column:auto}.top{height:70px}.team{display:none}.perpa{font-size:.65rem;padding:7px}.wordmark{font-size:1.3rem}.back{top:10px;left:10px}}
+/* Home is mounted only while the menu is active. */
+.home-only{display:none!important}body.home .home-only{display:block!important}body.home .home-name{left:6%!important;right:auto!important;top:52%!important;transform:translateY(-50%)}body.home .launch-links{left:66%!important;right:auto!important;top:52%!important;transform:translateY(-50%)}body:not(.home) .inside{padding-top:110px}@media(max-width:900px){body.home .home-name{left:5%!important}body.home .launch-links{left:63%!important}.landing-title{font-size:clamp(3.5rem,10vw,5.1rem)}.launch{font-size:clamp(.95rem,2.6vw,1.25rem)}}@media(max-width:730px){body.home .home-name{left:0!important;top:41%!important}body.home .launch-links{left:0!important;top:67%!important}body:not(.home) .inside{padding-top:76px}}
+.season-picker{position:relative;margin-top:12px}.season-trigger{width:100%;display:flex;align-items:center;gap:9px;padding:7px;background:#09090c;border:1px solid #ffffff20;border-radius:8px;color:#fff;text-align:left}.season-trigger:hover{border-color:#ff1e27}.season-logo{width:34px;height:34px;object-fit:cover;border-radius:5px;background:#4f899a}.season-copy{display:grid;gap:2px;flex:1}.season-copy strong{font-size:.72rem;letter-spacing:.08em}.season-copy small{font-size:.6rem;color:var(--muted)}.season-arrow{font-size:.9rem;transition:transform .18s}.season-picker.open .season-arrow{transform:rotate(180deg)}.season-options{display:none;position:absolute;z-index:10;left:0;right:0;top:calc(100% + 5px);padding:5px;background:#17171c;border:1px solid #ffffff2b;border-radius:8px;box-shadow:0 10px 20px #0008}.season-picker.open .season-options{display:block}.season-option{width:100%;display:flex;align-items:center;gap:8px;border:0;border-radius:5px;background:transparent;color:#fff;padding:6px;text-align:left}.season-option:hover{background:#ffffff12}.season-option span{font-size:.72rem;font-weight:800}
+@media(max-width:730px){.board{grid-template-columns:1fr;grid-template-areas:'field' 'tools' 'right'}.field{height:auto;aspect-ratio:600/315}.tools{display:block}.tools .tool-grid{grid-template-columns:repeat(3,1fr)}.right{grid-column:auto}.field-top{top:7px;left:7px;right:7px}.field-tag,.field-fullscreen{padding:5px 7px;font-size:.57rem}.piece-remove{display:block}.fullscreen-tools{max-width:calc(100vw - 20px);overflow-x:auto}.field:fullscreen .field-top .field-tag,.field:-webkit-full-screen .field-top .field-tag{display:none}}
+/* At tablet widths the field gets its own row too, preventing panels from covering it. */
+@media(max-width:1250px){.board{grid-template-columns:1fr;grid-template-areas:'field' 'tools' 'right'}.field{height:auto;aspect-ratio:600/315}.tools{display:block}.right{grid-column:auto}.tools .back{position:static;display:flex;align-items:center;justify-content:center;width:max-content;margin:0 auto 16px;padding:13px 21px;font-size:.96rem}.tools .back+div{clear:both}}
+.field-fullscreen{padding:10px 14px;font-size:.76rem}
+@media(max-width:1250px){body:not(.home) .back{position:fixed;z-index:30;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;min-width:154px;padding:13px 21px;font-size:.96rem;border-radius:9px;box-shadow:0 7px 20px #0008}}
+.tools>div{padding:11px;border:1px solid #ffffff14;border-radius:10px;background:#09090b80}.tools>div+div{margin-top:11px}.tools>div>.section-title{margin-bottom:10px}.tools .season-picker{margin-top:0}
+.tools{position:relative;z-index:5}.right{position:relative;z-index:1}
+/* Home navigation cards */
+.launch-links{gap:14px}.launch{width:clamp(250px,24vw,340px);min-height:68px;padding:14px 19px;border:1px solid #ffffff2e;border-radius:10px;background:linear-gradient(135deg,#ffffff0d,#ffffff03);justify-content:space-between;font-size:clamp(1.16rem,2.2vw,1.62rem);box-shadow:0 9px 20px #0003;transition:transform .2s,background .2s,border-color .2s,box-shadow .2s}.launch:hover,.launch:focus-visible,.launch:active{color:#fff;transform:scale(1.045);border-color:#ff1e27;background:linear-gradient(135deg,#e509143d,#ffffff0a);box-shadow:0 11px 27px #e5091433}.tap{width:auto;height:auto;border:0;border-radius:0}.tap:after{display:none}.tap:before{content:'→';display:block;font-size:1.55em;font-weight:500;line-height:1;transition:transform .2s}.launch:hover .tap:before,.launch:focus-visible .tap:before{transform:translateX(5px)}
+@media(max-width:730px){.launch{width:min(100%,330px);min-height:61px;padding:12px 16px;font-size:1.12rem}}
+@media(min-width:731px) and (max-width:900px){body.home .launch-links{left:50%!important}.launch{width:min(42vw,320px)}}
+@media(max-width:730px){body.home .launch-links{width:calc(100% - 24px)}.launch{width:100%;min-width:0;gap:8px;font-size:clamp(.95rem,4.3vw,1.12rem)}.launch .tap{flex:0 0 24px;text-align:center}.launch .tap:before{font-size:1.3em}}
+/* Stable home layout: no absolute-position collisions on phones or narrow tablets. */
+.launch-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:900px){body.home .landing{display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:48px;padding:22px 12px;min-height:calc(100vh - 36px)}body.home .home-name,body.home .launch-links{position:static!important;transform:none!important;left:auto!important;right:auto!important;top:auto!important;width:100%!important}body.home .home-name{text-align:left}.landing-title{font-size:clamp(4rem,16vw,5.6rem)!important;line-height:.7}.landing-team{margin-top:17px}.launch-links{gap:14px}.launch{width:100%;max-width:none;min-width:0;min-height:62px;padding:12px 16px;gap:10px;font-size:clamp(.98rem,4.4vw,1.2rem)}.launch .tap{flex:0 0 28px;text-align:center}.launch .tap:before{font-size:1.3em}}
+.hub-state{margin:9px auto 0;padding:8px 10px;border:1px solid #ffffff35;border-radius:7px;text-align:center;font-size:.65rem;font-weight:950;letter-spacing:.08em}.hub-state.neutral{background:#ffffff16;color:#fff}.hub-state.red{background:#b70e1660;border-color:#ff6d73;color:#fff}.hub-state.blue{background:#164eaa70;border-color:#78a5ff;color:#fff}
+.field.whiteboard{background:#fff}.field.whiteboard .field-image{display:none}.field.whiteboard.grid-on:after{background-image:linear-gradient(#00000022 1px,transparent 1px),linear-gradient(90deg,#00000022 1px,transparent 1px)}
+</style>
+<style>
+/* Fusion Tactix electric-blue theme and responsive branding. */
+:root{--red:#00b7ff;--red2:#087dff}
+body{background-image:linear-gradient(#c7c7c70d 1px,transparent 1px),linear-gradient(90deg,#c7c7c70d 1px,transparent 1px),radial-gradient(ellipse 130% 72% at 50% 100%,#006bb540 0,transparent 74%)}
+.fusion-logo{position:fixed;z-index:40;top:18px;right:22px;width:148px;height:auto;object-fit:contain;filter:drop-shadow(0 0 18px #008cff70);pointer-events:none}
+body.home .fusion-logo{position:absolute;top:clamp(44px,8vh,92px);left:54%;right:auto;transform:translateX(-50%);width:clamp(260px,24vw,360px);filter:drop-shadow(0 0 24px #008cff70)}
+.landing:after{display:block;position:fixed;z-index:0;left:0;right:0;bottom:0;width:100vw;height:62vh;background:radial-gradient(ellipse 120% 82% at 50% 100%,#00b7ff9a 0%,#008cff61 30%,#0066b934 53%,transparent 78%)}
+.landing-title span,.launch:hover,.launch:focus-visible,.launch:active,.wordmark b,.section-title,.phase,.metric{color:#00b7ff}
+.landing-title span{text-shadow:0 0 32px #087dff8c}
+.launch:hover,.launch:focus-visible,.launch:active{border-color:#00b7ff;background:linear-gradient(135deg,#008cff3d,#ffffff0a);box-shadow:0 11px 27px #008cff40}
+.nav.active,.nav:hover{border-color:#00b7ff80;background:#008cff24}.perpa:hover,.back:hover,.field-fullscreen:hover,.season-trigger:hover{border-color:#00b7ff;color:#00b7ff}
+.btn{background:#087dff}.btn:hover{background:#00b7ff;box-shadow:0 0 19px #008cff75}.input:focus{border-color:#00b7ff;box-shadow:0 0 0 3px #008cff25}
+.tool.active,.tool:hover{border-color:#00b7ff;background:#008cff24}.color.active{outline-color:#00b7ff}.range{accent-color:#00b7ff}.eraser-cursor{background:#00b7ff29}
+.token.red{color:#ff7a7f}.piece.r,.piece-remove{background:#b70e16}.piece-remove:hover{background:#ff1e27}.fullscreen-tool.active{border-color:#00b7ff;background:#008cff55}
+.check input:checked,.bar i{background:#00b7ff;border-color:#00b7ff}.bar i{box-shadow:0 0 15px #00b7ff}.check-action:hover{border-color:#00b7ff}.check-action.delete:hover,.mini.del:hover{background:#087dff;border-color:#087dff}
+.outcome .active.loss{background:#a9161d}.badge.loss{color:#ff989d;background:#e5091429;border-color:#ff1e2766}.toast{border-color:#00b7ff88}.hub-state.red{background:#b70e1660;border-color:#ff6d73}
+@media(max-width:730px){.fusion-logo{top:13px;right:14px;width:105px}body.home .fusion-logo{top:25px;width:210px}.landing{padding-top:105px!important}}
+.language-switcher{position:static;z-index:3;display:flex;width:max-content;gap:9px;margin:19px auto 0;padding:6px;border:1px solid #ffffff2e;border-radius:999px;background:#09090bb8;backdrop-filter:blur(8px)}.language-switcher button{position:relative;width:38px;height:26px;border:1px solid transparent;border-radius:5px;background:transparent;color:transparent;font-size:0;line-height:1;opacity:.64;overflow:hidden;transition:.18s}.language-switcher button[data-lang="tr"]{background:radial-gradient(circle at 47% 50%,#e30a17 0 6px,transparent 6.4px),radial-gradient(circle at 41% 50%,#fff 0 8px,transparent 8.4px),#e30a17}.language-switcher button[data-lang="tr"]:after{content:'★';position:absolute;left:22px;top:4px;color:#fff;font-size:14px;line-height:1}.language-switcher button[data-lang="en"]{background:linear-gradient(#fff 0 39%,#c8102e 39% 61%,#fff 61% 100%)}.language-switcher button[data-lang="en"]:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 39%,#c8102e 39% 61%,transparent 61% 100%)}.language-switcher button:hover,.language-switcher button.active{opacity:1;border-color:#00b7ff;box-shadow:0 0 12px #008cff70}.language-switcher button:focus-visible{outline:2px solid #00b7ff;outline-offset:2px}@media(max-width:900px){.language-switcher{margin:16px auto 0}}@media(max-width:730px){.language-switcher{margin-top:13px}}
+</style>
+<style>
+/* Text-based language controls, styled as a softly rounded rectangle. */
+.token.blue{color:#ff7a7f}
+.language-switcher{gap:7px;border-radius:12px}
+.language-switcher button{width:38px;height:26px;border:1px solid transparent;border-radius:6px;background:#ffffff10!important;color:#dfefff!important;font-size:.68rem!important;font-weight:900;line-height:1;letter-spacing:.04em;opacity:.7;overflow:visible}
+.language-switcher button[data-lang="tr"]:after,.language-switcher button[data-lang="en"]:before{content:none}
+.language-switcher button:hover,.language-switcher button.active{opacity:1;border-color:#00b7ff;background:#00b7ff22!important;box-shadow:0 0 12px #008cff70}
+</style>
+<style>
+/* Final viewport-safe home layout: the logo always has its own reserved space. */
+@media(min-width:901px) and (max-height:760px){body.home .fusion-logo{top:12px;width:clamp(160px,15vw,235px)}body.home .home-name,body.home .launch-links{top:56%!important}}
+@media(min-width:901px) and (max-height:580px){body.home .fusion-logo{top:4px;width:155px}body.home .home-name,body.home .launch-links{top:59%!important}.landing-title{font-size:clamp(3.4rem,7vw,4.8rem)!important}.launch{min-height:54px;padding:9px 14px}}
+@media(min-width:901px) and (max-width:1100px){body.home .fusion-logo{top:14px;left:50%;width:210px}body.home .landing{display:flex;flex-direction:column;justify-content:flex-start;gap:30px;padding:158px 28px 32px;min-height:100vh}body.home .home-name,body.home .launch-links{position:static!important;transform:none!important;width:100%!important}body.home .home-name{text-align:left}.launch{width:min(100%,420px)}}
+@media(max-width:900px){body.home .fusion-logo{top:12px;left:50%;width:clamp(155px,42vw,225px)}body.home .landing{justify-content:flex-start!important;gap:30px!important;padding:165px 18px 30px!important;min-height:100vh}.home-name,.launch-links{flex:0 0 auto}}
+@media(max-width:480px){body.home .fusion-logo{top:6px;width:150px}body.home .landing{padding-top:133px!important;gap:24px!important}.landing-title{font-size:clamp(3.35rem,17vw,4.5rem)!important}.landing-team{margin-top:13px}.language-switcher{margin-top:11px}.launch{min-height:56px}}
+</style>
+</head>
+<body class="home"><img class="fusion-logo" src="fusion-tactix-logo-transparent.png" alt="Fusion Tactix logosu"><div class="app">
+<main>
+<section id="home" class="page active home-only"><div class="landing"><div class="home-name"><h1 class="landing-title">FUSİON <span>Tactix</span></h1><div class="landing-team">7682 FUSİON ROBOTİCS</div></div><div class="launch-links"><button class="launch" data-go="board">Taktik Tahtası <i class="tap"></i></button><button class="launch" data-go="checklist">Pre-Match List <i class="tap"></i></button><button class="launch" data-go="matches">MatchLog Program <i class="tap"></i></button></div></div></section>
+<div class="inside"><button class="back" data-go="home">← Ana Menü</button><header class="top"><div class="empty-logo" aria-label="Logo alanı"></div><div><div class="wordmark">FUSİON <b>Tactix</b></div><div class="team">7682 FUSİON STRATEGY HUB</div></div><a class="perpa" href="https://perpalarus.com/" target="_blank" rel="noopener">perpalarus.com</a></header><nav><button class="nav" data-go="board">Taktik Tahtası</button><button class="nav" data-go="checklist">Pre-Match List</button><button class="nav" data-go="matches">MatchLog Program</button></nav>
+<section id="board" class="page"><div class="board"><aside class="panel tools"><div><p class="section-title">Çizim aracı</p><div class="tool-grid" id="drawTools"><button class="tool active" data-tool="pencil">Kalem</button><button class="tool" data-tool="line">Düz çizgi</button><button class="tool" data-tool="arrow">Auto oku</button><button class="tool" data-tool="text">Metin</button><button class="tool" data-tool="eraser">Silgi</button><button class="tool" data-tool="clear">Temizle</button></div></div><div><p class="section-title">Renk / araç ayarı</p><div class="colors" id="colors"><button class="color active" style="background:#ff1e27" data-color="#ff1e27"></button><button class="color" style="background:white" data-color="#ffffff"></button><button class="color" style="background:#ffd329" data-color="#ffd329"></button><button class="color" style="background:#101010;border-color:#555" data-color="#101010"></button></div><input class="range" id="strokeSize" type="range" min="1" max="18" value="4"><div class="hint" id="sizeText">Kalem kalınlığı: 4 px</div></div><div><p class="section-title">Saha görünümü</p><select class="input" id="fieldMode"><option value="field1">Rebuilt Field 1</option><option value="field2">Rebuilt Field 2</option></select></div><div><p class="section-title" style="margin-top:16px">Sezon seç</p><div class="season-picker" id="seasonPicker"><button class="season-trigger" id="seasonTrigger" type="button" aria-expanded="false"><img class="season-logo" src="rebuilt-season-logo.png" alt="Rebuilt logosu"><span class="season-copy"><strong>REBUILT</strong><small>2026 sezonu</small></span><span class="season-arrow" aria-hidden="true">⌄</span></button><div class="season-options"><button class="season-option" type="button"><img class="season-logo" src="rebuilt-season-logo.png" alt=""><span>REBUILT</span></button></div></div></div></aside><div class="panel field grid-on" id="field"><img id="fieldImage" class="field-image" src="rebuilt-field-1.png" alt="Rebuilt Field 1"><div class="field-top"><span class="field-tag" id="fieldLabel">REBUILT FIELD 1</span><button class="field-fullscreen" id="fullscreenField" type="button">⛶ Tam ekran</button></div><canvas id="canvas"></canvas><div class="eraser-cursor" id="eraserCursor" aria-hidden="true"></div><div class="fullscreen-tools" id="fullscreenTools"><button class="fullscreen-tool active" data-fullscreen-tool="pencil">Kalem</button><button class="fullscreen-tool" data-fullscreen-tool="line">Çizgi</button><button class="fullscreen-tool" data-fullscreen-tool="arrow">Ok</button><button class="fullscreen-tool" data-fullscreen-tool="eraser">Silgi</button><button class="fullscreen-tool" data-fullscreen-tool="clear">Temizle</button></div></div><aside class="panel right"><div><p class="section-title">Maç saati</p><div class="timer" id="clock">02:30</div><div class="phase" id="phase">PRE-MATCH</div><div class="timer-row"><button class="btn" id="start">Başlat</button><button class="btn soft" id="reset">Sıfırla</button></div><p class="hint">İlk 15 saniye Auto; son 30 saniye Endgame.</p></div><div class="split"></div><div><p class="section-title">Taktik parçaları</p><div class="tokens" id="tokens"><button class="token red" data-piece="R1">R1</button><button class="token red" data-piece="R2">R2</button><button class="token red" data-piece="R3">R3</button><button class="token blue" data-piece="B1">B1</button><button class="token blue" data-piece="B2">B2</button><button class="token blue" data-piece="B3">B3</button><button class="token" data-piece="⚠️" title="Uyarı">⚠️</button><button class="token" data-piece="🎯" title="Hedef">🎯</button><button class="token" data-piece="⚡" title="Hız">⚡</button><button class="token" data-piece="🛡️" title="Kalkan">🛡️</button></div><p class="hint">Parçayı sürükleyin; kaldırmak için üzerindeki × simgesine basın.</p></div><div class="split"></div><div><button class="btn warn" id="scan" style="width:100%">Yol Çakışmasını Tara</button><div class="alert" id="conflict">Auto oklarını çizdikten sonra tarama yapın.</div></div></aside></div></section>
+<section id="checklist" class="page"><div class="panel lead"><div><h1>Pre-Match List</h1><p>Drive team için maç öncesi sistem ve güvenlik kontrolü.</p></div><button class="btn soft" id="resetChecks">Kontrolleri Sıfırla</button></div><div class="checks"><div class="panel check-panel"><p class="section-title">Drive Team Ready</p><div id="checkItems"></div><form class="add" id="addCheck"><input class="input" id="newCheck" required placeholder="Yeni kontrol maddesi"><button class="btn">Ekle</button></form></div><aside class="panel meter"><p class="section-title">Hazırlık durumu</p><div class="metric" id="percent">0%</div><div class="bar"><i id="bar" style="width:0%"></i></div><p class="hint" id="checkHint">Başlamadan önce tüm maddeleri doğrulayın.</p></aside></div></section>
+<section id="matches" class="page"><div class="panel lead"><div><h1>MatchLog Program</h1><p>TBA bağlantısına hazır yerel maç günlüğü.</p></div><span class="hint">LOCAL STORAGE</span></div><div class="log"><form id="matchForm" class="panel form"><h2 id="formHeading">Maç Kaydı Ekle</h2><p>Sonuç, partner ve strateji notlarını saklayın.</p><input type="hidden" id="editId"><div class="form-grid"><div class="field-row"><label>Maç / numara</label><input required class="input" id="number" placeholder="Qual 14"></div><div class="field-row"><label>Skor</label><input required class="input" id="score" placeholder="112 - 89"></div><div class="field-row full"><label>Alliance Partnerları</label><div class="partners"><input required class="input" id="p1" placeholder="Takım 1"><input required class="input" id="p2" placeholder="Takım 2"><input required class="input" id="p3" placeholder="Takım 3"></div></div><div class="field-row full"><label>Sonuç</label><div class="outcome"><button type="button" class="active win" data-result="win">WIN</button><button type="button" class="loss" data-result="loss">LOSS</button></div></div><div class="field-row full"><label>Scouting / strateji notu</label><textarea class="input" id="notes" placeholder="Auto, savunma ve sonraki maç planı..."></textarea></div><button class="btn field-row full" id="save">Maçı Kaydet</button></div></form><section class="panel records"><div class="record-head"><div><h2>Kayıtlı Maçlar</h2><div class="count" id="count">0 kayıt</div></div><button class="btn soft" id="example">Örnek Kayıt</button></div><div class="records-list" id="records"></div></section></div></section>
+ </div></main></div><div id="toast" class="toast"></div><input id="grid" type="checkbox" checked hidden>
+<script>
+/* Remove only the legacy white canvas marks that were mistaken for a grid. */
+(() => {
+  const cleanupKey = 'tactix-white-strokes-cleanup-v1';
+  if (localStorage.getItem(cleanupKey) === 'done') return;
+  try {
+    const strokes = JSON.parse(localStorage.getItem('tactix-strokes') || '[]');
+    const cleaned = Array.isArray(strokes) ? strokes.filter(stroke => !['#ffffff', '#fff', 'white'].includes(String(stroke.colour || '').toLowerCase())) : [];
+    localStorage.setItem('tactix-strokes', JSON.stringify(cleaned));
+  } catch (_) { localStorage.removeItem('tactix-strokes'); }
+  localStorage.setItem(cleanupKey, 'done');
+})();
+</script>
+<script>
+(()=>{'use strict';const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],data={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};let toastTimer;function toast(s){let e=$('#toast');e.textContent=s;e.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('show'),1900)}function go(id){$$('.page,.nav').forEach(e=>e.classList.remove('active'));$('#'+id).classList.add('active');let n=$(`.nav[data-go="${id}"]`);if(n)n.classList.add('active');document.body.classList.toggle('home',id==='home');$('.inside').scrollTop=0;if(id==='board')setTimeout(sizeCanvas,0);window.scrollTo(0,0)}$$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+const canvas=$('#canvas'),ctx=canvas.getContext('2d'),field=$('#field');let dpr=devicePixelRatio||1,tool='pencil',colour='#ff1e27',thick=4,strokes=data.get('tactix-strokes',[]),draft,mode='real',grid=true;function resize(){let r=canvas.getBoundingClientRect();canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);paint()}function sizeCanvas(){resize()}addEventListener('resize',resize);function background(){let w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);ctx.fillStyle=mode==='real'?'#947a49':mode==='neon'?'#130609':'#eeeeea';ctx.fillRect(0,0,w,h);let x=w*.07,y=h*.12,fw=w*.86,fh=h*.76;ctx.fillStyle=mode==='real'?'#b49459':mode==='neon'?'#16090c':'#171717';ctx.fillRect(x,y,fw,fh);ctx.strokeStyle=mode==='neon'?'#ff1e27':mode==='map'?'#111':'#f6edd8';ctx.lineWidth=2*dpr;ctx.strokeRect(x,y,fw,fh);ctx.beginPath();ctx.moveTo(w/2,y);ctx.lineTo(w/2,y+fh);ctx.arc(w/2,h/2,fh*.2,-Math.PI/2,Math.PI/2);ctx.stroke();if(grid){ctx.strokeStyle=mode==='map'?'#ffffff18':'#ffffff20';ctx.lineWidth=dpr;for(let i=1;i<17;i++){ctx.beginPath();ctx.moveTo(x+fw*i/17,y);ctx.lineTo(x+fw*i/17,y+fh);ctx.stroke()}for(let i=1;i<8;i++){ctx.beginPath();ctx.moveTo(x,y+fh*i/8);ctx.lineTo(x+fw,y+fh*i/8);ctx.stroke()}}}function line(s){ctx.save();ctx.strokeStyle=s.colour;ctx.lineWidth=s.thick*dpr;ctx.lineCap='round';ctx.lineJoin='round';if(s.tool==='eraser')ctx.globalCompositeOperation='destination-out';if(s.tool==='text'){ctx.fillStyle=s.colour;ctx.font=`${Math.max(15,s.thick*4)*dpr}px Arial`;ctx.fillText(s.text,s.a.x,s.a.y);ctx.restore();return}ctx.beginPath();ctx.moveTo(s.a.x,s.a.y);(s.tool==='pencil'||s.tool==='eraser'?(s.points||[]):[s.b]).forEach(p=>ctx.lineTo(p.x,p.y));ctx.stroke();if(s.tool==='arrow'){let a=Math.atan2(s.b.y-s.a.y,s.b.x-s.a.x),l=13*dpr;ctx.beginPath();ctx.moveTo(s.b.x,s.b.y);ctx.lineTo(s.b.x-l*Math.cos(a-.5),s.b.y-l*Math.sin(a-.5));ctx.moveTo(s.b.x,s.b.y);ctx.lineTo(s.b.x-l*Math.cos(a+.5),s.b.y-l*Math.sin(a+.5));ctx.stroke()}ctx.restore()}function paint(){background();strokes.forEach(line)}function pos(e){let r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height}}canvas.onpointerdown=e=>{let p=pos(e);if(tool==='text'){let text=prompt('Metin girin');if(text){strokes.push({tool:'text',colour,thick,a:p,text});data.set('tactix-strokes',strokes);paint()}return}canvas.setPointerCapture(e.pointerId);draft={tool,colour,thick,a:p,b:p,points:[p]}};canvas.onpointermove=e=>{if(!draft)return;let p=pos(e);draft.b=p;if(tool==='pencil'||tool==='eraser')draft.points.push(p);paint();line(draft)};canvas.onpointerup=()=>{if(!draft)return;if(draft.tool==='pencil'||draft.tool==='eraser'?draft.points.length>1:true){strokes.push(draft);data.set('tactix-strokes',strokes)}draft=null;paint()};$('#drawTools').onclick=e=>{let b=e.target.closest('[data-tool]');if(!b)return;if(b.dataset.tool==='clear'){if(confirm('Tüm çizimler temizlensin mi?')){strokes=[];data.set('tactix-strokes',strokes);paint()}return}tool=b.dataset.tool;$$('#drawTools .tool').forEach(x=>x.classList.toggle('active',x===b))};$('#colors').onclick=e=>{let b=e.target.closest('[data-color]');if(!b)return;colour=b.dataset.color;$$('.color').forEach(x=>x.classList.toggle('active',x===b))};$('#strokeSize').oninput=e=>{thick=+e.target.value;$('#sizeText').textContent=thick+' px'};$('#grid').onchange=e=>{grid=e.target.checked;paint()};$('#fieldMode').onchange=e=>{mode=e.target.value;$('#fieldLabel').textContent=e.target.options[e.target.selectedIndex].text.toUpperCase();paint()};function piece(label){let p=document.createElement('div'),robot=/^[RB][1-3]$/.test(label);p.className='piece '+(robot?'robot '+(label[0]==='R'?'r':'b'):'');p.textContent=label;p.style.left=(field.clientWidth/2-17)+'px';p.style.top=(field.clientHeight/2-17)+'px';field.append(p);let start;p.onpointerdown=e=>{e.stopPropagation();p.setPointerCapture(e.pointerId);start={x:e.clientX,y:e.clientY,l:parseFloat(p.style.left),t:parseFloat(p.style.top)}};p.onpointermove=e=>{if(!start)return;p.style.left=Math.max(0,Math.min(field.clientWidth-36,start.l+e.clientX-start.x))+'px';p.style.top=Math.max(0,Math.min(field.clientHeight-36,start.t+e.clientY-start.y))+'px'};p.onpointerup=()=>start=null}$('#tokens').onclick=e=>{let b=e.target.closest('[data-piece]');if(b)piece(b.dataset.piece)};function cross(a,b,c,d){let cc=(p,q,r)=>(r.y-p.y)*(q.x-p.x)>(q.y-p.y)*(r.x-p.x);return cc(a,c,d)!==cc(b,c,d)&&cc(a,b,c)!==cc(a,b,d)}$('#scan').onclick=()=>{let a=strokes.filter(s=>s.tool==='arrow'),bad=false;for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++)bad||=cross(a[i].a,a[i].b,a[j].a,a[j].b);let box=$('#conflict');box.className='alert '+(bad?'danger':'');box.textContent=bad?'Dikkat: Auto yolları kesişiyor. Çarpışma riski var.':'Doğrudan bir auto yolu kesişmesi algılanmadı.'};
+let sec=150,run=false,interval;function clock(){let m=Math.floor(sec/60),s=sec%60;$('#clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');$('#phase').textContent=sec>135?'AUTO — 15 SANİYE':sec<=30?'ENDGAME — 30 SANİYE':'TELEOP'}$('#start').onclick=()=>{run=!run;$('#start').textContent=run?'Duraklat':'Başlat';if(run)interval=setInterval(()=>{if(sec){sec--;clock()}else $('#start').click()},1000);else clearInterval(interval)};$('#reset').onclick=()=>{clearInterval(interval);run=false;sec=150;$('#start').textContent='Başlat';clock()};clock();
+const checklistStorageKey='tactix-checks',checklistVersionKey='tactix-checks-version';
+// Version 2 intentionally starts with no pre-filled checks. Existing automatic defaults are cleared once.
+if(localStorage.getItem(checklistVersionKey)!=='2'){data.set(checklistStorageKey,[]);localStorage.setItem(checklistVersionKey,'2')}
+let checks=data.get(checklistStorageKey,[]);
+function saveChecks(){data.set(checklistStorageKey,checks)}
+function checksUI(){let e=$('#checkItems');e.replaceChildren();if(!checks.length){let empty=document.createElement('p');empty.className='check-empty';empty.textContent='Henüz kontrol maddesi yok. İlk maddeyi aşağıdan ekleyin.';e.append(empty)}checks.forEach(x=>{let l=document.createElement('div');l.className='check';let input=document.createElement('input');input.type='checkbox';input.checked=x.done;input.setAttribute('aria-label',x.t+' tamamlandı');let text=document.createElement('span');text.className='check-text';text.textContent=x.t;let actions=document.createElement('div');actions.className='check-actions';let edit=document.createElement('button');edit.type='button';edit.className='check-action';edit.textContent='Düzenle';edit.dataset.edit=x.id;let remove=document.createElement('button');remove.type='button';remove.className='check-action delete';remove.textContent='Sil';remove.dataset.delete=x.id;input.onchange=()=>{x.done=input.checked;saveChecks();checksUI()};actions.append(edit,remove);l.append(input,text,actions);e.append(l)});let done=checks.filter(x=>x.done).length,p=checks.length?Math.round(100*done/checks.length):0;$('#percent').textContent=p+'%';$('#bar').style.width=p+'%';$('#checkHint').textContent=checks.length?(p===100?'Tüm kontroller tamamlandı. Takım hazır.':`${done}/${checks.length} kontrol tamamlandı.`):'Başlamak için kendi kontrol maddelerinizi ekleyin.'}
+checksUI();
+$('#addCheck').onsubmit=e=>{e.preventDefault();let i=$('#newCheck'),text=i.value.trim();if(!text)return;checks.push({id:crypto.randomUUID(),t:text,done:false});saveChecks();i.value='';checksUI();toast('Kontrol maddesi eklendi')};
+$('#checkItems').onclick=e=>{let edit=e.target.closest('[data-edit]'),remove=e.target.closest('[data-delete]');if(edit){let item=checks.find(x=>x.id===edit.dataset.edit),next=prompt('Kontrol maddesini düzenleyin:',item?.t||'');if(next!==null&&next.trim()){item.t=next.trim();saveChecks();checksUI();toast('Kontrol maddesi güncellendi')}return}if(remove){let item=checks.find(x=>x.id===remove.dataset.delete);if(item&&confirm('“'+item.t+'” maddesi silinsin mi?')){checks=checks.filter(x=>x.id!==item.id);saveChecks();checksUI();toast('Kontrol maddesi silindi')}}};
+$('#resetChecks').onclick=()=>{checks.forEach(x=>x.done=false);saveChecks();checksUI();toast('Kontroller sıfırlandı')};
+let games=data.get('tactix-games',[]),result='win';function esc(x){return String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function gamesUI(){let box=$('#records');$('#count').textContent=games.length+' kayıt';box.innerHTML=games.length?games.map(g=>`<article class="record"><div class="actions"><button class="mini" data-edit="${g.id}">Düzenle</button><button class="mini del" data-del="${g.id}">Sil</button></div><div class="record-top"><strong>${esc(g.number)}</strong><span class="badge ${g.result}">${g.result==='win'?'WIN':'LOSS'} · ${esc(g.score)}</span></div><small>Alliance: <b>${g.partners.map(esc).join(' · ')}</b></small>${g.notes?`<p class="notes">${esc(g.notes)}</p>`:''}</article>`).join(''):'<div class="none">Henüz maç kaydı yok.</div>'}gamesUI();$$('[data-result]').forEach(b=>b.onclick=()=>{result=b.dataset.result;$$('[data-result]').forEach(x=>x.classList.toggle('active',x===b))});$('#matchForm').onsubmit=e=>{e.preventDefault();let id=$('#editId').value,g={id:id||crypto.randomUUID(),number:$('#number').value.trim(),score:$('#score').value.trim(),partners:[$('#p1').value.trim(),$('#p2').value.trim(),$('#p3').value.trim()],result,notes:$('#notes').value.trim()};games=id?games.map(x=>x.id===id?g:x):[g,...games];data.set('tactix-games',games);e.target.reset();$('#editId').value='';result='win';$$('[data-result]').forEach(x=>x.classList.toggle('active',x.dataset.result==='win'));$('#formHeading').textContent='Maç Kaydı Ekle';$('#save').textContent='Maçı Kaydet';gamesUI();toast('Maç kaydedildi')};$('#records').onclick=e=>{let id=e.target.dataset.edit||e.target.dataset.del;if(!id)return;if(e.target.dataset.del){games=games.filter(g=>g.id!==id);data.set('tactix-games',games);gamesUI();return}let g=games.find(x=>x.id===id);$('#editId').value=g.id;$('#number').value=g.number;$('#score').value=g.score;[$('#p1'),$('#p2'),$('#p3')].forEach((x,i)=>x.value=g.partners[i]);$('#notes').value=g.notes;result=g.result;$$('[data-result]').forEach(x=>x.classList.toggle('active',x.dataset.result===result));$('#formHeading').textContent='Maç Kaydını Düzenle';$('#save').textContent='Değişiklikleri Kaydet';scrollTo({top:0,behavior:'smooth'})};$('#example').onclick=()=>{games.unshift({id:crypto.randomUUID(),number:'Qual 14',score:'112 - 89',partners:['11818','9876','5432'],result:'win',notes:'Auto rotası temiz. Son 30 saniyede orta saha savunmasına geçildi.'});data.set('tactix-games',games);gamesUI()};
+})();
+</script>
+<script>
+/* Keep the two field images on their own layer so erasing affects only drawings. */
+(() => {
+  const field = document.querySelector('#field');
+  const image = document.querySelector('#fieldImage');
+  const canvas = document.querySelector('#canvas');
+  const context = canvas.getContext('2d');
+  const nativeFillRect = context.fillRect.bind(context);
+  const nativeStroke = context.stroke.bind(context);
+  const fieldImages = { field1: 'rebuilt-field-1.png', field2: 'rebuilt-field-2.png' };
+  const fieldMode = document.querySelector('#fieldMode');
+  const legacyGridControl = document.querySelector('#grid');
+  fieldMode.insertAdjacentHTML('beforeend', '<option value="whiteboard">Whiteboard</option>');
+  legacyGridControl.closest('label')?.remove();
+
+  // The legacy canvas background is disabled; the image and CSS grid stay beneath it.
+  context.fillRect = () => {};
+  // The field image is the background; the old canvas border must never be painted over it.
+  context.strokeRect = () => {};
+  context.stroke = function () {
+    const backgroundStrokes = ['#f6edd8', '#ffffff20', '#111'];
+    if (this.globalCompositeOperation === 'destination-out' || !backgroundStrokes.includes(this.strokeStyle)) {
+      nativeStroke();
+    }
+  };
+
+  function setField(value) {
+    const isWhiteboard = value === 'whiteboard';
+    field.classList.toggle('whiteboard', isWhiteboard);
+    field.classList.toggle('grid-on', isWhiteboard);
+    image.style.display = isWhiteboard ? 'none' : 'block';
+    if (!isWhiteboard) image.src = fieldImages[value];
+    image.alt = value === 'field1' ? 'Rebuilt Field 1' : value === 'field2' ? 'Rebuilt Field 2' : '';
+    document.querySelector('#fieldLabel').textContent = isWhiteboard ? 'WHITEBOARD' : value === 'field1' ? 'REBUILT FIELD 1' : 'REBUILT FIELD 2';
+  }
+
+  fieldMode.onchange = event => setField(event.target.value);
+  setField('field1');
+})();
+</script>
+<script>
+(() => {
+  const field = document.querySelector('#field');
+  const canvas = document.querySelector('#canvas');
+  const eraserCursor = document.querySelector('#eraserCursor');
+  const size = document.querySelector('#strokeSize');
+  const sizeText = document.querySelector('#sizeText');
+  const drawTools = document.querySelector('#drawTools');
+  document.querySelectorAll('.launch').forEach(button => {
+    const text = [...button.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+    if (!text) return;
+    const label = document.createElement('span');
+    label.className = 'launch-label';
+    label.textContent = text.textContent.trim();
+    button.replaceChild(label, text);
+  });
+  let activeTool = 'pencil', pencilSize = Number(size.value), eraserSize = 28;
+
+  function updateSize() {
+    const eraser = activeTool === 'eraser';
+    size.min = eraser ? '8' : '1';
+    size.max = eraser ? '70' : '18';
+    size.value = String(eraser ? eraserSize : pencilSize);
+    sizeText.textContent = eraser ? `Silgi çapı: ${eraserSize} px` : `Kalem kalınlığı: ${pencilSize} px`;
+    size.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  function setTool(next) {
+    if (next === 'clear') return;
+    activeTool = next;
+    document.querySelectorAll('[data-fullscreen-tool]').forEach(button => button.classList.toggle('active', button.dataset.fullscreenTool === next));
+    updateSize();
+    if (next !== 'eraser') eraserCursor.style.display = 'none';
+  }
+  drawTools.addEventListener('click', event => {
+    const button = event.target.closest('[data-tool]');
+    if (button) setTool(button.dataset.tool);
+  });
+  document.querySelector('#fullscreenTools').addEventListener('click', event => {
+    const button = event.target.closest('[data-fullscreen-tool]');
+    if (!button) return;
+    const source = document.querySelector(`#drawTools [data-tool="${button.dataset.fullscreenTool}"]`);
+    source?.click();
+  });
+  size.addEventListener('input', () => {
+    if (activeTool === 'eraser') eraserSize = Number(size.value);
+    else pencilSize = Number(size.value);
+    sizeText.textContent = activeTool === 'eraser' ? `Silgi çapı: ${eraserSize} px` : `Kalem kalınlığı: ${pencilSize} px`;
+  });
+  canvas.addEventListener('pointermove', event => {
+    if (activeTool !== 'eraser') return;
+    const rect = field.getBoundingClientRect(), diameter = eraserSize;
+    eraserCursor.style.cssText = `display:block;width:${diameter}px;height:${diameter}px;left:${event.clientX - rect.left - diameter / 2}px;top:${event.clientY - rect.top - diameter / 2}px`;
+  });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(type => canvas.addEventListener(type, () => eraserCursor.style.display = 'none'));
+
+  document.querySelector('#fullscreenField').addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else field.requestFullscreen?.();
+  });
+  document.addEventListener('fullscreenchange', () => {
+    document.querySelector('#fullscreenField').textContent = document.fullscreenElement ? '⤢ Çıkış' : '⛶ Tam ekran';
+    setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+  });
+
+  const picker = document.querySelector('#seasonPicker'), trigger = document.querySelector('#seasonTrigger');
+  trigger.addEventListener('click', () => {
+    const open = picker.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', String(open));
+  });
+  picker.querySelector('.season-option').addEventListener('click', () => {
+    picker.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false');
+  });
+  document.addEventListener('click', event => { if (!picker.contains(event.target)) picker.classList.remove('open'); });
+
+  const addDeleteButton = piece => {
+    if (piece.querySelector('.piece-remove')) return;
+    const remove = document.createElement('button');
+    remove.type = 'button'; remove.className = 'piece-remove'; remove.textContent = '×'; remove.setAttribute('aria-label', 'Parçayı sil');
+    remove.addEventListener('pointerdown', event => event.stopPropagation());
+    remove.addEventListener('click', event => { event.stopPropagation(); piece.remove(); });
+    piece.append(remove);
+  };
+  new MutationObserver(records => records.forEach(record => record.addedNodes.forEach(node => {
+    if (node.nodeType === 1 && node.classList.contains('piece')) addDeleteButton(node);
+  }))).observe(field, { childList: true });
+
+  field.classList.remove('grid-on');
+  const gridControl = document.createElement('label');
+  gridControl.className = 'hint';
+  gridControl.style.cssText = 'display:flex;align-items:center;gap:8px;margin-top:12px;cursor:pointer';
+  const gridToggle = document.createElement('input');
+  gridToggle.type = 'checkbox';
+  gridToggle.checked = false;
+  gridControl.append(gridToggle, document.createTextNode('Izgarayı göster'));
+  document.querySelector('#fieldMode').closest('div').append(gridControl);
+  // Disable the old canvas grid completely; it used to be part of the drawing layer.
+  const legacyGrid = document.querySelector('#grid');
+  legacyGrid.checked = false;
+  legacyGrid.dispatchEvent(new Event('change', { bubbles: true }));
+  gridToggle.addEventListener('change', () => field.classList.toggle('grid-on', gridToggle.checked));
+  document.querySelector('#fieldMode').addEventListener('change', () => field.classList.toggle('grid-on', gridToggle.checked));
+
+  // Sample records should not be available in the production match log.
+  document.querySelector('#example')?.remove();
+
+  window.dispatchEvent(new Event('resize'));
+})();
+</script>
+<script>
+/* Official Rebuilt match chronology for the board timer. */
+(() => {
+  const clock = document.querySelector('#clock');
+  const phase = document.querySelector('#phase');
+  const start = document.querySelector('#start');
+  const reset = document.querySelector('#reset');
+  const timerPanel = clock.parentElement;
+  const title = timerPanel.querySelector('.section-title');
+  const description = timerPanel.querySelector('.hint');
+  title.textContent = 'Maç Kronometresi';
+  const hub = document.createElement('div');
+  hub.className = 'hub-state neutral';
+  phase.insertAdjacentElement('afterend', hub);
+
+  const periods = [
+    [0, 20, 'OTONOM DÖNEMİ', 'HER İKİ HUB AKTİF', 'neutral', 'Robotlar kodla hareket eder; iki HUB da puan için açıktır.'],
+    [20, 30, 'GEÇİŞ VARDİYASI', 'HER İKİ HUB AKTİF', 'neutral', 'Sürücüler kontrolü devralır, ittifaklar pozisyon alır.'],
+    [30, 55, '1. RED ALLIANCE VARDİYASI', 'KIRMIZI HUB AKTİF', 'red', 'Kırmızı HUB açık; Mavi ittifak savunma veya yakıt depolamada.'],
+    [55, 80, '2. BLUE ALLIANCE VARDİYASI', 'MAVİ HUB AKTİF', 'blue', 'Mavi HUB açık; Kırmızı ittifak savunma veya yakıt depolamada.'],
+    [80, 105, '3. RED ALLIANCE VARDİYASI', 'KIRMIZI HUB AKTİF', 'red', 'Kırmızı ittifak yeniden hücumda.'],
+    [105, 130, '4. BLUE ALLIANCE VARDİYASI', 'MAVİ HUB AKTİF', 'blue', 'Mavi ittifak Endgame öncesi son hücum fırsatında.'],
+    [130, 160, 'OYUN SONU · ENDGAME', 'HER İKİ HUB AKTİF', 'neutral', 'İki HUB açık; yakıtları sayıya çevirin ve TOWER’a tırmanın.']
+  ];
+  let remaining = 160, running = false, interval;
+  function render() {
+    const elapsed = 160 - remaining;
+    const current = periods.find(item => elapsed >= item[0] && elapsed < item[1]) || periods.at(-1);
+    const minutes = Math.floor(remaining / 60), seconds = remaining % 60;
+    clock.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    phase.textContent = current[2];
+    hub.textContent = current[3];
+    hub.className = `hub-state ${current[4]}`;
+    description.textContent = current[5];
+  }
+  start.onclick = () => {
+    if (remaining === 0) { remaining = 160; render(); }
+    running = !running;
+    start.textContent = running ? 'Duraklat' : 'Başlat';
+    if (running) interval = setInterval(() => {
+      if (remaining > 0) { remaining--; render(); }
+      if (remaining === 0) { clearInterval(interval); running = false; start.textContent = 'Baştan Başlat'; }
+    }, 1000);
+    else clearInterval(interval);
+  };
+  reset.onclick = () => { clearInterval(interval); running = false; remaining = 160; start.textContent = 'Başlat'; render(); };
+  render();
+})();
+/* Keep the board's initial ink and first swatch aligned with the electric-blue UI. */
+colour='#00b7ff';
+const primarySwatch=document.querySelector('#colors [data-color="#ff1e27"]');
+if(primarySwatch){primarySwatch.dataset.color='#00b7ff';primarySwatch.style.background='#00b7ff'}
+</script><script>
+/* Turkish / English interface switcher. Team and product names remain unchanged. */
+(() => {
+  const copy = {
+    tr: {
+      launchBoard: 'Taktik Tahtası', launchChecks: 'Maç Öncesi Kontrol', launchMatches: 'Maç Kayıtları', back: '← Ana Menü',
+      draw: 'Çizim araçları', pencil: 'Kalem', line: 'Düz çizgi', arrow: 'Otonom oku', text: 'Metin', eraser: 'Silgi', clear: 'Temizle',
+      settings: 'Renk ve araç ayarları', fieldView: 'Saha görünümü', season: 'Sezon seçimi', fullscreen: '⛶ Tam ekran', exitFullscreen: '⤢ Çıkış',
+      matchTimer: 'Maç kronometresi', start: 'Başlat', pause: 'Duraklat', restart: 'Baştan başlat', reset: 'Sıfırla', timerHint: 'İlk 15 saniye otonom; son 30 saniye oyun sonu.',
+      pieces: 'Taktik parçaları', piecesHint: 'Parçayı sürükleyin; kaldırmak için üzerindeki × simgesine basın.', scan: 'Yol çakışmasını tara', scanHint: 'Otonom oklarını çizdikten sonra tarama yapın.',
+      checklist: 'Maç Öncesi Kontrol Listesi', checklistLead: 'Sürücü ekibi için maç öncesi sistem ve güvenlik kontrolleri.', resetChecks: 'Kontrolleri sıfırla', ready: 'Sürücü ekibi hazır', addCheck: 'Yeni kontrol maddesi', add: 'Ekle', readiness: 'Hazırlık durumu', checkHint: 'Başlamadan önce tüm maddeleri doğrulayın.',
+      matchLog: 'Maç Kayıtları', matchLead: 'TBA bağlantısına hazır yerel maç günlüğü.', addMatch: 'Maç kaydı ekle', matchIntro: 'Sonuçları, ittifak ortaklarını ve strateji notlarını kaydedin.', matchNo: 'Maç numarası', score: 'Skor', partners: 'İttifak ortakları', outcome: 'Sonuç', notes: 'Scouting / strateji notu', notesPlaceholder: 'Otonom, savunma ve sonraki maç planı…', save: 'Maçı kaydet', saved: 'Kayıtlı maçlar',
+      grid: 'Izgarayı göster', whiteboard: 'Beyaz tahta', edit: 'Düzenle', del: 'Sil', noChecks: 'Henüz kontrol maddesi yok. İlk maddeyi aşağıdan ekleyin.', noRecords: 'Henüz maç kaydı yok.', win: 'GALİBİYET', loss: 'MAĞLUBİYET', alliance: 'İttifak', record: 'kayıt', records: 'kayıt',
+      autonomous: 'OTONOM DÖNEMİ', transition: 'GEÇİŞ DÖNEMİ', red1: '1. KIRMIZI İTTİFAK DÖNEMİ', blue2: '2. MAVİ İTTİFAK DÖNEMİ', red3: '3. KIRMIZI İTTİFAK DÖNEMİ', blue4: '4. MAVİ İTTİFAK DÖNEMİ', endgame: 'OYUN SONU', hubs: 'HER İKİ HUB AKTİF', redHub: 'KIRMIZI HUB AKTİF', blueHub: 'MAVİ HUB AKTİF',
+      dAuto: 'Robotlar kodla hareket eder; iki HUB da puan için açıktır.', dTransition: 'Sürücüler kontrolü devralır, ittifaklar pozisyon alır.', dRed1: 'Kırmızı HUB açık; mavi ittifak savunma yapabilir veya yakıt depolayabilir.', dBlue2: 'Mavi HUB açık; kırmızı ittifak savunma yapabilir veya yakıt depolayabilir.', dRed3: 'Kırmızı ittifak yeniden hücumda.', dBlue4: 'Mavi ittifak oyun sonu öncesindeki son hücum fırsatında.', dEnd: 'İki HUB açık; yakıtları puana çevirin ve TOWER’a tırmanın.'
+    },
+    en: {
+      launchBoard: 'Tactics Board', launchChecks: 'Pre-Match Checklist', launchMatches: 'Match Log', back: '← Main Menu',
+      draw: 'Drawing tools', pencil: 'Pencil', line: 'Straight line', arrow: 'Autonomous arrow', text: 'Text', eraser: 'Eraser', clear: 'Clear',
+      settings: 'Color and tool settings', fieldView: 'Field view', season: 'Season selection', fullscreen: '⛶ Full screen', exitFullscreen: '⤢ Exit full screen',
+      matchTimer: 'Match timer', start: 'Start', pause: 'Pause', restart: 'Restart', reset: 'Reset', timerHint: 'First 15 seconds autonomous; final 30 seconds endgame.',
+      pieces: 'Tactical pieces', piecesHint: 'Drag a piece; use its × button to remove it.', scan: 'Scan for path conflicts', scanHint: 'Draw autonomous arrows, then run the scan.',
+      checklist: 'Pre-Match Checklist', checklistLead: 'Pre-match system and safety checks for the drive team.', resetChecks: 'Reset checks', ready: 'Drive team ready', addCheck: 'New checklist item', add: 'Add', readiness: 'Readiness', checkHint: 'Confirm every item before the match begins.',
+      matchLog: 'Match Log', matchLead: 'Local match log ready for a TBA connection.', addMatch: 'Add match record', matchIntro: 'Save results, alliance partners, and strategy notes.', matchNo: 'Match number', score: 'Score', partners: 'Alliance partners', outcome: 'Outcome', notes: 'Scouting / strategy notes', notesPlaceholder: 'Autonomous, defense, and next-match plan…', save: 'Save match', saved: 'Saved matches',
+      grid: 'Show grid', whiteboard: 'Whiteboard', edit: 'Edit', del: 'Delete', noChecks: 'No checklist items yet. Add the first item below.', noRecords: 'No match records yet.', win: 'WIN', loss: 'LOSS', alliance: 'Alliance', record: 'record', records: 'records',
+      autonomous: 'AUTONOMOUS PERIOD', transition: 'TRANSITION PERIOD', red1: '1ST RED ALLIANCE SHIFT', blue2: '2ND BLUE ALLIANCE SHIFT', red3: '3RD RED ALLIANCE SHIFT', blue4: '4TH BLUE ALLIANCE SHIFT', endgame: 'ENDGAME', hubs: 'BOTH HUBS ACTIVE', redHub: 'RED HUB ACTIVE', blueHub: 'BLUE HUB ACTIVE',
+      dAuto: 'Robots move on code; both HUBs are open for scoring.', dTransition: 'Drivers take control while alliances set their positions.', dRed1: 'The red HUB is open; the blue alliance can defend or store fuel.', dBlue2: 'The blue HUB is open; the red alliance can defend or store fuel.', dRed3: 'The red alliance is attacking again.', dBlue4: 'The blue alliance has its final attack opportunity before endgame.', dEnd: 'Both HUBs are open; turn fuel into points and climb the TOWER.'
+    }
+  };
+  let lang = localStorage.getItem('fusion-tactix-language') || 'tr';
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => [...document.querySelectorAll(selector)];
+  const set = (selector, value) => { const el = $(selector); if (el && el.textContent !== value) el.textContent = value; };
+  const setAll = (selector, value) => $$(selector).forEach(el => { if (el.textContent !== value) el.textContent = value; });
+  const timerTranslations = {
+    'OTONOM DÖNEMİ': 'autonomous', 'GEÇİŞ VARDİYASI': 'transition', 'GEÇİŞ DÖNEMİ': 'transition', '1. RED ALLIANCE VARDİYASI': 'red1', '2. BLUE ALLIANCE VARDİYASI': 'blue2', '3. RED ALLIANCE VARDİYASI': 'red3', '4. BLUE ALLIANCE VARDİYASI': 'blue4', 'OYUN SONU · ENDGAME': 'endgame',
+    'HER İKİ HUB AKTİF': 'hubs', 'KIRMIZI HUB AKTİF': 'redHub', 'MAVİ HUB AKTİF': 'blueHub',
+    'Robotlar kodla hareket eder; iki HUB da puan için açıktır.': 'dAuto', 'Sürücüler kontrolü devralır, ittifaklar pozisyon alır.': 'dTransition', 'Kırmızı HUB açık; Mavi ittifak savunma veya yakıt depolamada.': 'dRed1', 'Mavi HUB açık; Kırmızı ittifak savunma veya yakıt depolamada.': 'dBlue2', 'Kırmızı ittifak yeniden hücumda.': 'dRed3', 'Mavi ittifak Endgame öncesi son hücum fırsatında.': 'dBlue4', 'İki HUB açık; yakıtları sayıya çevirin ve TOWER’a tırmanın.': 'dEnd'
+  };
+  function dynamic() {
+    const t = copy[lang];
+    $$('#checkItems [data-edit], #records [data-edit]').forEach(el => { if (el.textContent !== t.edit) el.textContent = t.edit; });
+    $$('#checkItems [data-delete], #records [data-del]').forEach(el => { if (el.textContent !== t.del) el.textContent = t.del; });
+    set('#checkItems .check-empty', t.noChecks); set('#records .none', t.noRecords);
+    $$('#records .badge.win').forEach(el => { const v=`${t.win} · ${el.textContent.split(' · ').slice(1).join(' · ')}`; if(el.textContent!==v)el.textContent=v; });
+    $$('#records .badge.loss').forEach(el => { const v=`${t.loss} · ${el.textContent.split(' · ').slice(1).join(' · ')}`; if(el.textContent!==v)el.textContent=v; });
+    const count = $('#count'); if (count) { const n = count.textContent.match(/\d+/)?.[0] || '0', v=`${n} ${Number(n) === 1 ? t.record : t.records}`; if(count.textContent!==v)count.textContent=v; }
+    [$('#phase'), $('.hub-state'), $('#clock')?.parentElement?.querySelector('.hint')].forEach(el => { const key=el&&(timerTranslations[el.textContent]||Object.keys(timerTranslations).find(k=>copy.en[timerTranslations[k]]===el.textContent)&&timerTranslations[Object.keys(timerTranslations).find(k=>copy.en[timerTranslations[k]]===el.textContent)]); if (key) { const v=t[key]; if(el.textContent!==v)el.textContent=v; } });
+    const start = $('#start'); if (start) { const key = ({'Başlat':'start','Duraklat':'pause','Baştan Başlat':'restart','Baştan başlat':'restart','Start':'start','Pause':'pause','Restart':'restart'})[start.textContent]; if (key && start.textContent!==t[key]) start.textContent = t[key]; }
+    const hint = $('#checkHint'); if (hint && (hint.textContent.includes('Henüz') || hint.textContent.includes('No checklist'))) { const v=lang === 'en' ? 'Add your own checklist items to get started.' : 'Başlamak için kendi kontrol maddelerinizi ekleyin.'; if(hint.textContent!==v)hint.textContent=v; }
+  }
+  function apply() {
+    const t = copy[lang]; document.documentElement.lang = lang;
+    setAll('.launch-label', t.launchBoard); const launches = $$('.launch-label'); if (launches[1]) launches[1].textContent = t.launchChecks; if (launches[2]) launches[2].textContent = t.launchMatches;
+    set('.back', t.back); const nav = $$('.nav'); if(nav[0])nav[0].textContent=t.launchBoard;if(nav[1])nav[1].textContent=t.launchChecks;if(nav[2])nav[2].textContent=t.launchMatches;
+    const toolTitles=$$('#board .tools > div > .section-title'); if(toolTitles[0])toolTitles[0].textContent=t.draw;if(toolTitles[1])toolTitles[1].textContent=t.settings;if(toolTitles[2])toolTitles[2].textContent=t.fieldView;if(toolTitles[3])toolTitles[3].textContent=t.season;
+    ['pencil','line','arrow','text','eraser','clear'].forEach(key=>set(`#drawTools [data-tool="${key}"]`,t[key]));
+    set('#fullscreenField', document.fullscreenElement?t.exitFullscreen:t.fullscreen); const ftools=$$('[data-fullscreen-tool]'); ['pencil','line','arrow','eraser','clear'].forEach((key,i)=>{if(ftools[i])ftools[i].textContent=t[key]});
+    set('.right .section-title',t.matchTimer); set('#reset',t.reset); set('#scan',t.scan); const rightTitles=$$('.right .section-title');if(rightTitles[1])rightTitles[1].textContent=t.pieces; const rightHints=$$('.right .hint');if(rightHints[0])rightHints[0].textContent=t.timerHint;if(rightHints[1])rightHints[1].textContent=t.piecesHint;set('#conflict',t.scanHint);
+    const leadTitles=$$('.lead h1');if(leadTitles[0])leadTitles[0].textContent=t.checklist;if(leadTitles[1])leadTitles[1].textContent=t.matchLog; const leadPs=$$('.lead p');if(leadPs[0])leadPs[0].textContent=t.checklistLead;if(leadPs[1])leadPs[1].textContent=t.matchLead;
+    set('#resetChecks',t.resetChecks); const checkTitle=$('.check-panel .section-title');if(checkTitle)checkTitle.textContent=t.ready; $('#newCheck').placeholder=t.addCheck;set('#addCheck .btn',t.add);set('.meter .section-title',t.readiness);set('#checkHint',t.checkHint);
+    set('#formHeading',t.addMatch);set('.form p',t.matchIntro);const labels=$$('.field-row label');[t.matchNo,t.score,t.partners,t.outcome,t.notes].forEach((v,i)=>{if(labels[i])labels[i].textContent=v});$('#notes').placeholder=t.notesPlaceholder;set('#save',t.save);set('.records h2',t.saved);
+    const gridLabel=$('#fieldMode').closest('div')?.querySelector('label.hint');if(gridLabel)gridLabel.lastChild.textContent=t.grid; const white=[...$('#fieldMode').options].find(o=>o.value==='whiteboard');if(white)white.textContent=t.whiteboard;
+    $$('.language-switcher button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang)); dynamic();
+  }
+  const switcher=document.createElement('div'); switcher.className='language-switcher'; switcher.setAttribute('aria-label','Language selection'); switcher.innerHTML='<button type="button" data-lang="tr" aria-label="Türkçe">TR</button><button type="button" data-lang="en" aria-label="English">EN</button>'; $('.home-name').append(switcher);
+  switcher.addEventListener('click',e=>{const button=e.target.closest('[data-lang]');if(!button)return;lang=button.dataset.lang;localStorage.setItem('fusion-tactix-language',lang);apply()});
+  new MutationObserver(()=>requestAnimationFrame(dynamic)).observe(document.body,{childList:true,subtree:true,characterData:true});
+  apply();
+})();
+</script></body></html>
